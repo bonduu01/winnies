@@ -444,3 +444,70 @@ p {
     font-size: 0.875rem;
   }
 }
+
+/* === About === */
+.about {
+  padding: var(--section-padding);
+  background-color: var(--color-white);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.about-images {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  align-items: end;
+}
+
+.about-images img {
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.about-images img:first-child {
+  grid-row: span 2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-images img:last-child {
+  width: 100%;
+  object-fit: contain;
+}
+
+.about-text h3 {
+  margin-top: 1.5rem;
+}
+
+.about-text h3:first-of-type {
+  margin-top: 0;
+}
+
+@media (max-width: 1023px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .about-images {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-images {
+    grid-template-columns: 1fr;
+  }
+
+  .about-images img:first-child {
+    grid-row: auto;
+  }
+}
