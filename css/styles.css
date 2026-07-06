@@ -2,23 +2,47 @@
 :root {
   --color-primary: #E85A6A;
   --color-primary-dark: #d14555;
+  --color-primary-light: #f0707e;
   --color-dark: #1A1A1A;
   --color-white: #FFFFFF;
-  --color-light-gray: #F9F9F9;
-  --color-gold: #D4AF37;
+  --color-bg: #FFFFFF;
+  --color-bg-light: #F9F9F9;
+  --color-glass: rgba(255, 255, 255, 0.92);
+  --color-glass-border: rgba(230, 230, 230, 0.8);
   --color-text: #333333;
   --color-text-light: #666666;
+  --color-gold: #D4AF37;
 
-  --font-heading: 'Poppins', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
 
-  --radius: 8px;
+  --radius: 12px;
   --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --shadow-glass: 0 4px 20px rgba(0, 0, 0, 0.06);
   --transition: all 0.3s ease;
 
   --container-max: 1200px;
   --section-padding: 5rem 1.5rem;
+}
+
+/* === Dark Mode Variables === */
+[data-theme="dark"] {
+  --color-primary: #E85A6A;
+  --color-primary-dark: #f0707e;
+  --color-primary-light: #ff8a98;
+  --color-dark: #f5f5f5;
+  --color-white: #1A1A1A;
+  --color-bg: #121212;
+  --color-bg-light: #1e1e1e;
+  --color-glass: rgba(30, 30, 30, 0.92);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-text: #e0e0e0;
+  --color-text-light: #a0a0a0;
+}
+
+[data-theme="dark"] body {
+  background-color: #121212;
 }
 
 /* === Reset === */
@@ -36,7 +60,7 @@ body {
   font-family: var(--font-body);
   color: var(--color-text);
   line-height: 1.6;
-  background-color: var(--color-white);
+  background-color: var(--color-bg);
 }
 
 img {
@@ -55,7 +79,7 @@ ul {
 }
 
 /* === Typography === */
-h1, h2, h3 {
+h1, h2, h3, h4 {
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.2;
@@ -113,7 +137,7 @@ p {
 
 .btn-primary {
   background-color: var(--color-primary);
-  color: var(--color-white);
+  color: #ffffff;
 }
 
 .btn-primary:hover {
@@ -124,13 +148,35 @@ p {
 
 .btn-secondary {
   background-color: transparent;
-  color: var(--color-white);
-  border: 2px solid var(--color-white);
+  color: #ffffff;
+  border: 2px solid #ffffff;
 }
 
 .btn-secondary:hover {
-  background-color: var(--color-white);
+  background-color: #ffffff;
   color: var(--color-dark);
+}
+
+/* === Animations === */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* === Skip Link === */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  z-index: 1001;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 0;
 }
 
 /* === Header === */
@@ -196,6 +242,59 @@ p {
 
 .header-cta {
   padding: 0.625rem 1.25rem;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--color-glass-border);
+  background-color: var(--color-white);
+  color: var(--color-dark);
+  cursor: pointer;
+  transition: var(--transition);
+  margin-left: 0.75rem;
+  position: relative;
+}
+
+.theme-toggle:hover {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.theme-toggle .sun-icon,
+.theme-toggle .moon-icon {
+  position: absolute;
+  transition: var(--transition);
+}
+
+.theme-toggle .moon-icon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+}
+
+.theme-toggle .sun-icon {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+}
+
+[data-theme="dark"] .theme-toggle {
+  background-color: var(--color-bg-light);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .theme-toggle .sun-icon {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.5);
+}
+
+[data-theme="dark"] .theme-toggle .moon-icon {
+  opacity: 1;
+  transform: rotate(0) scale(1);
 }
 
 .menu-toggle {
@@ -305,23 +404,24 @@ p {
 .hero-content {
   position: relative;
   z-index: 1;
-  color: var(--color-white);
+  color: #ffffff;
   max-width: 800px;
 }
 
 .hero-content h1 {
-  color: var(--color-white);
+  color: #ffffff;
   margin-bottom: 1rem;
 }
 
 .hero-badge {
   display: inline-block;
   background-color: var(--color-primary);
-  color: var(--color-white);
+  color: #ffffff;
   padding: 0.5rem 1rem;
   border-radius: 50px;
   font-weight: 600;
   margin-bottom: 1.5rem;
+  animation: float 3s ease-in-out infinite;
 }
 
 .hero-tagline {
@@ -346,7 +446,7 @@ p {
 /* === Gallery === */
 .gallery {
   padding: var(--section-padding);
-  background-color: var(--color-light-gray);
+  background-color: var(--color-bg-light);
 }
 
 .gallery-filters {
@@ -373,7 +473,7 @@ p {
 .filter-btn.active {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
-  color: var(--color-white);
+  color: #ffffff;
 }
 
 .gallery-grid {
@@ -409,7 +509,7 @@ p {
   width: 100%;
   padding: 1rem;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-  color: var(--color-white);
+  color: #ffffff;
   font-family: var(--font-heading);
   font-weight: 600;
   transform: translateY(100%);
@@ -448,7 +548,7 @@ p {
 /* === About === */
 .about {
   padding: var(--section-padding);
-  background-color: var(--color-white);
+  background-color: var(--color-bg);
 }
 
 .about-grid {
@@ -515,7 +615,7 @@ p {
 /* === Services === */
 .services {
   padding: var(--section-padding);
-  background-color: var(--color-light-gray);
+  background-color: var(--color-bg-light);
 }
 
 .services-grid {
@@ -563,13 +663,17 @@ p {
 /* === Contact === */
 .contact {
   padding: var(--section-padding);
-  background-color: var(--color-dark);
-  color: var(--color-white);
+  background-color: #1A1A1A;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .contact {
+  background-color: #0a0a0a;
 }
 
 .contact .section-header h2,
 .contact .section-header p {
-  color: var(--color-white);
+  color: #ffffff;
 }
 
 .contact-grid {
@@ -593,7 +697,7 @@ p {
 }
 
 .contact-card h3 {
-  color: var(--color-white);
+  color: #ffffff;
   margin-bottom: 0.75rem;
 }
 
@@ -621,7 +725,7 @@ p {
 }
 
 .location-card h3 {
-  color: var(--color-white);
+  color: #ffffff;
   margin-bottom: 0.75rem;
 }
 
@@ -657,7 +761,7 @@ p {
 /* === Footer === */
 .site-footer {
   background-color: #111111;
-  color: var(--color-white);
+  color: #ffffff;
   padding: 4rem 1.5rem 1.5rem;
 }
 
@@ -680,7 +784,7 @@ p {
 
 .footer-links h4,
 .footer-contact h4 {
-  color: var(--color-white);
+  color: #ffffff;
   font-family: var(--font-heading);
   margin-bottom: 1rem;
 }
@@ -720,7 +824,7 @@ p {
   }
 }
 
-/* === Animations === */
+/* === Scroll Animations (Fade In) === */
 .fade-in {
   opacity: 0;
   transform: translateY(20px);
@@ -732,22 +836,7 @@ p {
   transform: translateY(0);
 }
 
-/* === Accessibility === */
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  background-color: var(--color-primary);
-  color: var(--color-white);
-  padding: 0.5rem 1rem;
-  z-index: 1001;
-  transition: top 0.3s;
-}
-
-.skip-link:focus {
-  top: 0;
-}
-
+/* === Focus Visible === */
 :focus-visible {
   outline: 3px solid var(--color-primary);
   outline-offset: 2px;
