@@ -3,12 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - master
-      - main
-  pull_request:
-    branches:
-      - master
-      - main
+      - main  # Standardized to your production branch (add master back if needed)
   workflow_dispatch:
 
 permissions:
@@ -30,14 +25,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # --- OPTIONAL BUILD STEPS SECTION ---
+      # If you use a framework (Vite, React, etc.), uncomment and adjust these:
+      # - name: Setup Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 20
+      #     cache: 'npm'
+      # - name: Install dependencies & Build
+      #   run: |
+      #     npm ci
+      #     npm run build
+      # -------------------------------------
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      # Upload the compiled site artifact
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
+          # Change '.' to 'dist', 'build', or '_site' if you are compiling your code
           path: '.'
 
+      # Publish the artifact to GitHub Pages infrastructure
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
