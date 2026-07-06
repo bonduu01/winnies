@@ -70,6 +70,16 @@ document.addEventListener('DOMContentLoaded', () => {
     '.section-header, .gallery-card, .service-card, .about-text, .about-images, .contact-card, .location-card'
   );
 
+  const revealElements = () => {
+    animatedElements.forEach((el, index) => {
+      el.classList.add('fade-in');
+      // Staggered reveal with a small delay for visual effect
+      setTimeout(() => {
+        el.classList.add('fade-in-visible');
+      }, index * 60);
+    });
+  };
+
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(
       entries => {
@@ -80,15 +90,24 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
       },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+      { threshold: 0.05, rootMargin: '0px 0px 0px 0px' }
     );
 
     animatedElements.forEach(el => {
       el.classList.add('fade-in');
       observer.observe(el);
     });
+
+    // Fallback: ensure content is visible even if observer fails (e.g., headless browsers)
+    setTimeout(() => {
+      animatedElements.forEach(el => {
+        if (!el.classList.contains('fade-in-visible')) {
+          el.classList.add('fade-in-visible');
+        }
+      });
+    }, 2500);
   } else {
     // Fallback for older browsers
-    animatedElements.forEach(el => el.classList.add('fade-in-visible'));
+    revealElements();
   }
 });
