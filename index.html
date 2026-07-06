@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Winnie's Hair Braiding — Premium braiding styles in New York and Minnesota. Open 24/7.">
+  <title>Winnie's Hair Braiding | Open 24/7</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="logos/favicon_32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="logos/favicon_16x16.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <header class="site-header" id="home">
+    <div class="container header-inner">
+      <a href="#home" class="logo">
+        <img src="logos/web_header_logo_600x200.png" alt="Winnie's Hair Braiding logo" width="180" height="60">
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <a href="https://wa.me/13478693789" class="btn btn-primary header-cta" target="_blank" rel="noopener noreferrer">Book Now</a>
+
+      <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span class="hamburger"></span>
+      </button>
+    </div>
+
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="https://wa.me/13478693789" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Book Now</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" id="hero">
+      <video class="hero-video" autoplay muted loop playsinline poster="images/winnies_home_page.jpeg">
+        <source src="images/newyork-video.mp4" type="video/mp4">
+      </video>
+      <div class="hero-overlay"></div>
+
+      <div class="container hero-content">
+        <p class="hero-badge">✨ Open 24/7</p>
+        <h1>Winnie's Hair Braiding</h1>
+        <p class="hero-tagline">Premium braiding styles in New York & Minnesota</p>
+        <div class="hero-actions">
+          <a href="https://wa.me/13478693789" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Book Now</a>
+          <a href="#gallery" class="btn btn-secondary">View Styles</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="gallery" id="gallery">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Styles</h2>
+          <p>Browse our gallery of professional braiding styles. Filter by category to find your next look.</p>
+        </div>
+
+        <div class="gallery-filters" role="group" aria-label="Filter gallery by style">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="box-braids">Box Braids</button>
+          <button class="filter-btn" data-filter="cornrows">Cornrows</button>
+          <button class="filter-btn" data-filter="twists">Twists</button>
+          <button class="filter-btn" data-filter="locs">Locs</button>
+          <button class="filter-btn" data-filter="crochet-weave">Crochet / Weave</button>
+          <button class="filter-btn" data-filter="updos">Updos</button>
+        </div>
+
+        <div class="gallery-grid">
+          <!-- Box Braids -->
+          <figure class="gallery-card" data-category="box-braids">
+            <img src="images/image-003.png" alt="Long blonde box braids with curly ends" loading="lazy">
+            <figcaption>Box Braids</figcaption>
+          </figure>
+          <figure class="gallery-card" data-category="box-braids">
+            <img src="images/image-004.png" alt="Black box braids with curly ends" loading="lazy">
+            <figcaption>Box Braids</figcaption>
+          </figure>
+          <figure class="gallery-card" data-category="box-braids">
+            <img src="images/image-005.png" alt="Classic long black box braids" loading="lazy">
+            <figcaption>Box Braids</figcaption>
+          </figure>
+          <figure class="gallery-card" data-category="box-braids">
+            <img src="images/image-010.png" alt="Black box braids with curly ends" loading="lazy">
+            <figcaption>Box Braids</figcaption>
+          </figure>
+          <figure class="gallery-card" data-category="box-braids">
+            <img src="images/image-011.png" alt="Black box braids with curly ends" loading="lazy">
+            <figcaption>Box Braids</figcaption>
+          </figure>
+          <figure class="gallery-card" data-category="box-braids">
+            <img src="images/image-014.png" alt="Brown box braids in a ponytail" loading="lazy">
+            <figcaption>Box Braids</figcaption>
+          </figure>
+          <figure class="gallery-card" data-category="box-braids">
+            <img src="images/image-02.png" alt="Very long black box braids" loading="lazy">
+            <figcaption>Box Braids</figcaption>
+          </figure>
+          <figure class="gallery-card" data-category="box-braids">
+            <img src="images/image-03.png" alt="Black box braids with curly ends" loading="lazy">
+            <figcaption>Box Braids</figcaption>
+          </figure>
+
+          <!-- Cornrows -->
+          <figure class="gallery-card" data-category="cornrows">
+            <img src="images/image-007.png" alt="Straight-back long cornrows" loading="lazy">
+            <figcaption>Cornrows</figcaption>
+          </figure>
+          <figure class="gallery-card" data-category="cornrows">
+            <img src="images/image-01.png" alt="Long straight-back cornrows" loading="lazy">
+            <figcaption>Cornrows</figcaption>
+          </figure>
+          <figure class="gallery-card" data-category="cornrows">
+            <img src="images/image-04.png" alt="Men's cornrows" loading="lazy">
+            <figcaption>Cornrows</figcaption>
+          </figure>
+          <figure class="gallery-card" data-category="cornrows">
+            <img src="images/image-017.png" alt="Kid's cornrows styled up" loading="lazy">
+            <figcaption>Cornrows</figcaption>
+          </figure>
+
+          <!-- Twists -->
+          <figure class="gallery-card" data-category="twists">
+            <img src="images/image-002.png" alt="Short two-strand twists" loading="lazy">
+            <figcaption>Twists</figcaption>
+          </figure>
+          <figure class="gallery-card" data-category="twists">
+            <img src="images/image-006.png" alt="Twists with blonde tips" loading="lazy">
+            <figcaption>Twists</figcaption>
+          </figure>
+          <figure class="gallery-card" data-category="twists">
+            <img src="images/image-013.png" alt="Short twists" loading="lazy">
+            <figcaption>Twists</figcaption>
+          </figure>
+          <figure class="gallery-card" data-category="twists">
+            <img src="images/image-06.png" alt="Medium twists" loading="lazy">
+            <figcaption>Twists</figcaption>
+          </figure>
+
+          <!-- Locs -->
+          <figure class="gallery-card" data-category="locs">
+            <img src="images/image-008.png" alt="Shoulder-length locs" loading="lazy">
+            <figcaption>Locs</figcaption>
+          </figure>
+          <figure class="gallery-card" data-category="locs">
+            <img src="images/image-012.png" alt="Medium locs" loading="lazy">
+            <figcaption>Locs</figcaption>
+          </figure>
+          <figure class="gallery-card" data-category="locs">
+            <img src="images/image-016.png" alt="Textured locs" loading="lazy">
+            <figcaption>Locs</figcaption>
+          </figure>
+
+          <!-- Crochet / Weave -->
+          <figure class="gallery-card" data-category="crochet-weave">
+            <img src="images/image-001.png" alt="Long curly wavy extensions" loading="lazy">
+            <figcaption>Crochet / Weave</figcaption>
+          </figure>
+          <figure class="gallery-card" data-category="crochet-weave">
+            <img src="images/image-009.png" alt="Curly wavy install" loading="lazy">
+            <figcaption>Crochet / Weave</figcaption>
+          </figure>
+          <figure class="gallery-card" data-category="crochet-weave">
+            <img src="images/image-05.png" alt="Curly crochet weave" loading="lazy">
+            <figcaption>Crochet / Weave</figcaption>
+          </figure>
+          <figure class="gallery-card" data-category="crochet-weave">
+            <img src="images/image-07.png" alt="Curly crochet weave" loading="lazy">
+            <figcaption>Crochet / Weave</figcaption>
+          </figure>
+
+          <!-- Updos -->
+          <figure class="gallery-card" data-category="updos">
+            <img src="images/image-015.png" alt="Braided updo crown" loading="lazy">
+            <figcaption>Updos</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="container">
+        <div class="section-header">
+          <h2>About Winnie's</h2>
+          <p>Expert braiding with a commitment to quality, comfort, and style.</p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-images">
+            <img src="images/winnies_home_page.jpeg" alt="Winnie's Hair Braiding storefront in Minnesota" width="400" height="500">
+            <img src="images/award_image.png" alt="Winnie's African Hair Braiding BusinessRate Top 3 Hair Salon award 2025" width="300" height="300">
+          </div>
+          <div class="about-text">
+            <h3>Craftsmanship You Can Trust</h3>
+            <p>At Winnie's Hair Braiding, we specialize in protective styles that look stunning and feel comfortable. With years of experience and locations in both New York and Minnesota, our team serves local clients and welcomes international visitors looking for premium braiding services.</p>
+            <p>We use quality hair extensions, keep a clean and relaxing salon environment, and work around your schedule — because beauty shouldn't wait.</p>
+
+            <h3>Open 24/7</h3>
+            <p>Life doesn't follow business hours, and neither do we. Whether you need an early-morning appointment before work or a late-night style session, Winnie's is here for you.</p>
+
+            <a href="#contact" class="btn btn-primary">Get in Touch</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="services" id="services">
+      <div class="container">
+        <div class="section-header">
+          <h2>Services We Offer</h2>
+          <p>From classic protective styles to trendy braided looks, we do it all.</p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card">
+            <h3>Box Braids</h3>
+            <p>Long-lasting, versatile braids in any length or color.</p>
+          </article>
+          <article class="service-card">
+            <h3>Knotless Braids</h3>
+            <p>Lightweight, tension-free braids for a natural, comfortable finish.</p>
+          </article>
+          <article class="service-card">
+            <h3>Cornrows</h3>
+            <p>Clean, precise rows from simple straight-backs to intricate patterns.</p>
+          </article>
+          <article class="service-card">
+            <h3>Twists</h3>
+            <p>Two-strand and passion twists with a soft, defined look.</p>
+          </article>
+          <article class="service-card">
+            <h3>Locs</h3>
+            <p>Loc styling, retwists, and maintenance for healthy, neat locs.</p>
+          </article>
+          <article class="service-card">
+            <h3>Crochet / Weave</h3>
+            <p>Quick, full styles with curly or wavy extensions.</p>
+          </article>
+          <article class="service-card">
+            <h3>Kids' Braids</h3>
+            <p>Gentle, age-appropriate styles for children of all ages.</p>
+          </article>
+          <article class="service-card">
+            <h3>Braided Updos</h3>
+            <p>Elegant updo styles for special occasions and everyday sophistication.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <h2>Book Your Appointment</h2>
+          <p>Reach out anytime. We're open 24/7 to take your call or message.</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>Email</h3>
+            <p><a href="mailto:Wmolokwu@gmail.com">Wmolokwu@gmail.com</a></p>
+          </div>
+          <div class="contact-card">
+            <h3>Phone</h3>
+            <p><a href="tel:+13478693789">347-869-3789</a></p>
+          </div>
+          <div class="contact-card">
+            <h3>WhatsApp Channel</h3>
+            <p><a href="https://whatsapp.com/channel/0029VbBzTDT7j6gBKN9mT40o" target="_blank" rel="noopener noreferrer">Join Channel</a></p>
+          </div>
+        </div>
+
+        <div class="locations">
+          <div class="location-card">
+            <h3>New York</h3>
+            <address>
+              180-23 Linden Blvd<br>
+              Queens, Jamaica, NY 11434
+            </address>
+            <a href="https://maps.google.com/?q=180-23+Linden+Blvd,+Queens,+Jamaica,+NY+11434" target="_blank" rel="noopener noreferrer" class="map-link">View on Map</a>
+          </div>
+          <div class="location-card">
+            <h3>Minnesota</h3>
+            <address>
+              11652 Winnetka Avenue North<br>
+              Champlin, MN 55316
+            </address>
+            <a href="https://maps.google.com/?q=11652+Winnetka+Avenue+North,+Champlin,+MN+55316" target="_blank" rel="noopener noreferrer" class="map-link">View on Map</a>
+          </div>
+        </div>
+
+        <div class="contact-cta">
+          <a href="https://wa.me/13478693789" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Book on WhatsApp</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="logos/web_footer_logo_450x150.png" alt="Winnie's Hair Braiding" width="180" height="60">
+        <p>Premium braiding styles in New York & Minnesota. Open 24/7.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p><a href="mailto:Wmolokwu@gmail.com">Wmolokwu@gmail.com</a></p>
+        <p><a href="tel:+13478693789">347-869-3789</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Winnie's Hair Braiding. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
