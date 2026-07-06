@@ -27,6 +27,25 @@
   --section-padding: 6rem 1.5rem;
 }
 
+/* === Dark Mode Variables === */
+[data-theme="dark"] {
+  --color-primary: #4aa3ea;
+  --color-primary-dark: #0774c4;
+  --color-primary-light: #7ac0ff;
+  --color-dark: #f0f7ff;
+  --color-white: #111827;
+  --color-bg: #0f172a;
+  --color-bg-light: #1e293b;
+  --color-glass: rgba(30, 41, 59, 0.72);
+  --color-glass-border: rgba(255, 255, 255, 0.1);
+  --color-text: #e2e8f0;
+  --color-text-light: #94a3b8;
+}
+
+[data-theme="dark"] body {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 35%, #172554 70%, #0f172a 100%);
+}
+
 /* === Reset === */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -128,7 +147,7 @@ p {
 
 .btn-primary {
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
-  color: var(--color-white);
+  color: #ffffff;
   box-shadow: 0 8px 24px rgba(7, 116, 196, 0.35);
 }
 
@@ -148,7 +167,7 @@ p {
 
 .btn-secondary {
   background: rgba(255, 255, 255, 0.15);
-  color: var(--color-white);
+  color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(10px);
 }
@@ -197,7 +216,7 @@ p {
   top: -40px;
   left: 0;
   background-color: var(--color-primary);
-  color: var(--color-white);
+  color: #ffffff;
   padding: 0.5rem 1rem;
   z-index: 1001;
   transition: top 0.3s;
@@ -276,6 +295,54 @@ p {
 
 .header-cta {
   padding: 0.75rem 1.5rem;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--color-glass-border);
+  background: var(--color-glass);
+  backdrop-filter: blur(10px);
+  color: var(--color-dark);
+  cursor: pointer;
+  transition: var(--transition);
+  margin-left: 0.75rem;
+}
+
+.theme-toggle:hover {
+  background: var(--color-primary);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.theme-toggle .sun-icon,
+.theme-toggle .moon-icon {
+  position: absolute;
+  transition: var(--transition);
+}
+
+.theme-toggle .moon-icon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+}
+
+.theme-toggle .sun-icon {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+}
+
+[data-theme="dark"] .theme-toggle .sun-icon {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.5);
+}
+
+[data-theme="dark"] .theme-toggle .moon-icon {
+  opacity: 1;
+  transform: rotate(0) scale(1);
 }
 
 .menu-toggle {
@@ -386,13 +453,13 @@ p {
 .hero-content {
   position: relative;
   z-index: 1;
-  color: var(--color-white);
+  color: #ffffff;
   max-width: 850px;
   padding: 0 1.5rem;
 }
 
 .hero-content h1 {
-  color: var(--color-white);
+  color: #ffffff;
   margin-bottom: 1.25rem;
   background: linear-gradient(91deg, #ffffff 16%, #e8f4fc 46%, #ffffff 76%);
   background-size: 200% auto;
@@ -405,7 +472,7 @@ p {
 .hero-badge {
   display: inline-block;
   background: rgba(255, 255, 255, 0.2);
-  color: var(--color-white);
+  color: #ffffff;
   padding: 0.5rem 1.25rem;
   border-radius: 50px;
   font-weight: 700;
@@ -488,7 +555,7 @@ p {
 .filter-btn.active {
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
   border-color: transparent;
-  color: var(--color-white);
+  color: #ffffff;
   box-shadow: 0 6px 20px rgba(7, 116, 196, 0.3);
 }
 
@@ -526,7 +593,7 @@ p {
   width: 100%;
   padding: 1rem;
   background: linear-gradient(to top, rgba(7, 116, 196, 0.9), transparent);
-  color: var(--color-white);
+  color: #ffffff;
   font-family: var(--font-heading);
   font-weight: 700;
   transform: translateY(100%);
@@ -714,7 +781,7 @@ p {
 
 .contact .section-header h2,
 .contact .section-header p {
-  color: var(--color-white);
+  color: #ffffff;
 }
 
 .contact-grid {
@@ -740,7 +807,7 @@ p {
 }
 
 .contact-card h3 {
-  color: var(--color-white);
+  color: #ffffff;
   margin-bottom: 0.75rem;
 }
 
@@ -769,7 +836,7 @@ p {
 }
 
 .location-card h3 {
-  color: var(--color-white);
+  color: #ffffff;
   margin-bottom: 0.75rem;
 }
 
@@ -805,7 +872,7 @@ p {
 /* === Footer === */
 .site-footer {
   background: rgba(26, 31, 40, 0.97);
-  color: var(--color-white);
+  color: #ffffff;
   padding: 4rem 1.5rem 1.5rem;
   backdrop-filter: blur(10px);
 }
@@ -829,7 +896,7 @@ p {
 
 .footer-links h4,
 .footer-contact h4 {
-  color: var(--color-white);
+  color: #ffffff;
   font-family: var(--font-heading);
   margin-bottom: 1rem;
   font-weight: 700;
