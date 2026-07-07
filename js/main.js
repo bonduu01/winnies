@@ -130,4 +130,32 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fallback for older browsers
     revealElements();
   }
+
+  // === Interactive Hero Widget ===
+  const hero = document.querySelector('.hero--interactive');
+
+  if (hero) {
+    // Trigger entrance animations once the hero is painted
+    requestAnimationFrame(() => {
+      hero.classList.add('hero--animated');
+    });
+
+    // Quick-style chips sync with the gallery filter
+    const heroChips = hero.querySelectorAll('.hero-chip');
+
+    heroChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const filter = chip.dataset.filter;
+        const galleryButton = document.querySelector(`.filter-btn[data-filter="${filter}"]`);
+
+        heroChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+
+        if (galleryButton) {
+          galleryButton.click();
+          document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  }
 });
