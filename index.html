@@ -12,6 +12,18 @@
   <link rel="icon" type="image/png" sizes="32x32" href="logos/favicon_32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="logos/favicon_16x16.png">
   <link rel="stylesheet" href="css/styles.css">
+  <noscript>
+    <style>
+      .hero-line,
+      .hero-badge,
+      .hero-tagline,
+      .hero-actions,
+      .hero-widget {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+  </noscript>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -56,19 +68,36 @@
   </header>
 
   <main id="main-content">
-    <section class="hero" id="hero">
-      <video class="hero-video" autoplay muted loop playsinline poster="images/winnies_home_page.jpeg">
-        <source src="images/winnies_front_video.mp4" type="video/mp4">
-      </video>
-      <div class="hero-overlay"></div>
+    <section class="hero hero--interactive" id="hero" aria-label="Winnie's Hair Braiding hero">
+      <div class="hero-scene" aria-hidden="true">
+        <img class="hero-image" src="images/winnies_home_page.jpeg" alt="" loading="eager">
+        <div class="hero-overlay"></div>
+      </div>
 
       <div class="container hero-content">
-        <p class="hero-badge">✨ Open 24/7</p>
-        <h1>Winnie's Hair Braiding</h1>
-        <p class="hero-tagline">Premium braiding styles in New York & Minnesota</p>
-        <div class="hero-actions">
-          <a href="https://wa.me/13478693789" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Book Now</a>
-          <a href="#gallery" class="btn btn-secondary">View Styles</a>
+        <div class="hero-card">
+          <span class="hero-badge"><span class="hero-pulse" aria-hidden="true"></span> Open 24/7</span>
+          <h1 class="hero-title">
+            <span class="hero-line">Winnie's</span>
+            <span class="hero-line">Hair Braiding</span>
+          </h1>
+          <p class="hero-tagline">Premium protective styles in New York & Minnesota</p>
+
+          <div class="hero-actions">
+            <a href="https://wa.me/13478693789" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Book Now</a>
+            <a href="#gallery" class="btn btn-secondary">View Styles</a>
+          </div>
+
+          <div class="hero-widget" role="group" aria-label="Quick style filter">
+            <p class="hero-widget-label">Explore a style:</p>
+            <div class="hero-chips">
+              <button class="hero-chip" data-filter="box-braids" type="button">Box Braids</button>
+              <button class="hero-chip" data-filter="cornrows" type="button">Cornrows</button>
+              <button class="hero-chip" data-filter="twists" type="button">Twists</button>
+              <button class="hero-chip" data-filter="locs" type="button">Locs</button>
+              <button class="hero-chip" data-filter="updos" type="button">Updos</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
