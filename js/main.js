@@ -158,4 +158,38 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  // === Scroll Floating Action Button ===
+  const scrollFab = document.getElementById('scroll-fab');
+
+  if (scrollFab) {
+    scrollFab.removeAttribute('hidden');
+
+    const updateScrollFab = () => {
+      const scrollTop = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const threshold = 100;
+      const nearBottom = maxScroll > 0 && scrollTop >= maxScroll - threshold;
+
+      if (scrollTop > threshold) {
+        scrollFab.classList.add('is-visible', 'is-scrolled');
+        scrollFab.setAttribute('aria-label', 'Scroll to top');
+      } else {
+        scrollFab.classList.add('is-visible');
+        scrollFab.classList.remove('is-scrolled');
+        scrollFab.setAttribute('aria-label', nearBottom ? 'Scroll to top' : 'Scroll to bottom');
+      }
+    };
+
+    scrollFab.addEventListener('click', () => {
+      if (scrollFab.classList.contains('is-scrolled')) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+      }
+    });
+
+    window.addEventListener('scroll', updateScrollFab, { passive: true });
+    updateScrollFab();
+  }
 });
