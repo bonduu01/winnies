@@ -52,7 +52,6 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max,ignore-error=true
 
-      # Debug: Show what tags were pushed
       - name: Show pushed tags
         run: echo "Pushed tags: ${{ steps.meta.outputs.tags }}"
 
@@ -82,10 +81,9 @@ jobs:
             docker run -d \
               --name ${{ env.CONTAINER_NAME }} \
               --restart unless-stopped \
-              -p 8000:80 \
+              -p 80:80 \
               ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
             echo "✅ Deployment successful!"
             echo "Container status:"
             docker ps | grep ${{ env.CONTAINER_NAME }}
-            docker logs --tail 20 ${{ env.CONTAINER_NAME }}
