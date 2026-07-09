@@ -23,7 +23,7 @@
   --transition: all 0.3s ease;
 
   --container-max: 1200px;
-  --section-padding: 5rem 1.5rem;
+  --section-padding: 4rem 1.5rem;
 }
 
 /* === Dark Mode Variables === */
@@ -54,6 +54,7 @@
 
 html {
   scroll-behavior: smooth;
+  font-size: 14px;
 }
 
 body {
@@ -372,7 +373,7 @@ p {
 /* === Hero (Interactive Widget) === */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 85vh;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -978,7 +979,7 @@ p {
 .site-footer {
   background-color: #111111;
   color: #ffffff;
-  padding: 4rem 1.5rem 1.5rem;
+  padding: 3.6rem 1.5rem 1.35rem;
 }
 
 .footer-inner {
