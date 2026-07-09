@@ -1,3 +1,5 @@
 .worktrees/
 tests/node_modules/
 .superpowers/
+docs
+AGENTS.md
