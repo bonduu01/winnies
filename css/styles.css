@@ -30,6 +30,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 100px;
 }
 
 body {
@@ -727,6 +728,21 @@ p {
   color: rgba(255, 255, 255, 0.5);
   font-size: 0.875rem;
   margin-bottom: 0;
+}
+
+.developer-credit {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.developer-credit a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: underline;
+  transition: var(--transition);
+}
+
+.developer-credit a:hover {
+  color: var(--color-primary);
 }
 
 @media (max-width: 768px) {
