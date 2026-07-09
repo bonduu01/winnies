@@ -33,11 +33,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels)
+      - name: Extract metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=raw,value=latest
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
@@ -46,14 +49,17 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          # Fixed cache configuration
           cache-from: type=gha
           cache-to: type=gha,mode=max,ignore-error=true
 
+      # Debug: Show what tags were pushed
+      - name: Show pushed tags
+        run: echo "Pushed tags: ${{ steps.meta.outputs.tags }}"
+
       # ======================
-      # Deploy to your server
+      # Deploy to Server
       # ======================
-      - name: Deploy to Server (51.124.123.164)
+      - name: Deploy to Server
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOST }}
@@ -62,22 +68,24 @@ jobs:
           script: |
             set -e
 
-            echo "🔐 Logging into GitHub Container Registry..."
+            echo "🔐 Logging into GHCR..."
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-            echo "📥 Pulling latest image..."
+            echo "📥 Pulling image..."
             docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
-            echo "⏹️  Stopping old container..."
+            echo "🛑 Stopping old container..."
             docker stop ${{ env.CONTAINER_NAME }} 2>/dev/null || true
             docker rm ${{ env.CONTAINER_NAME }} 2>/dev/null || true
 
-            echo "🚀 Starting new container..."
+            echo "🚀 Running new container..."
             docker run -d \
               --name ${{ env.CONTAINER_NAME }} \
               --restart unless-stopped \
-              -p 80:80 \
+              -p 8000:80 \
               ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
             echo "✅ Deployment successful!"
+            echo "Container status:"
             docker ps | grep ${{ env.CONTAINER_NAME }}
+            docker logs --tail 20 ${{ env.CONTAINER_NAME }}
