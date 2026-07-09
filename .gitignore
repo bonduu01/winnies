@@ -2,4 +2,5 @@
 tests/node_modules/
 .superpowers/
 docs
+/docs/superpowers/
 AGENTS.md
