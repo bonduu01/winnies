@@ -1,39 +1,13 @@
 # =============================================
-# Multi-stage Dockerfile for GitHub Pages / Static Site
+# Simple Dockerfile for Static Website (GitHub Pages style)
 # =============================================
 
-# -------------------
-# Builder stage
-# -------------------
-FROM node:20-alpine AS builder
+FROM nginx:alpine
 
-WORKDIR /app
+# Copy all static files to nginx html directory
+COPY . /usr/share/nginx/html
 
-# Copy package files
-COPY package*.json ./
-
-# Install dependencies (Fixed)
-RUN npm ci || npm install
-
-# Copy the rest of the source code
-COPY . .
-
-# Build the project (if build script exists)
-RUN npm run build || echo "No build script found - skipping build"
-
-# -------------------
-# Production stage
-# -------------------
-FROM nginx:alpine AS production
-
-# Copy built files (try common output folders)
-COPY --from=builder /app/dist /usr/share/nginx/html 2>/dev/null || \
-     COPY --from=builder /app/build /usr/share/nginx/html 2>/dev/null || \
-     COPY --from=builder /app/_site /usr/share/nginx/html 2>/dev/null || \
-     COPY --from=builder /app/public /usr/share/nginx/html 2>/dev/null || \
-     COPY --from=builder /app . /usr/share/nginx/html
-
-# Nginx config
+# Custom Nginx configuration (SPA fallback + caching)
 COPY <<EOF /etc/nginx/conf.d/default.conf
 server {
     listen 80;
@@ -41,11 +15,13 @@ server {
     root /usr/share/nginx/html;
     index index.html;
 
+    # Important: Serve index.html for all routes (for single-page behavior if needed)
     location / {
         try_files \$uri \$uri/ /index.html;
     }
 
-    location ~* \.(css|js|png|jpg|jpeg|gif|ico|svg|woff2?)$ {
+    # Cache static assets
+    location ~* \.(css|js|png|jpg|jpeg|gif|ico|svg|woff2?|ttf)$ {
         expires 1y;
         add_header Cache-Control "public, immutable";
     }
@@ -53,4 +29,8 @@ server {
 EOF
 
 EXPOSE 80
+
+# Health check
+HEALTHCHECK CMD wget --no-verbose --tries=1 --spider http://localhost || exit 1
+
 CMD ["nginx", "-g", "daemon off;"]
