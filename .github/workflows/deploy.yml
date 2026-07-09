@@ -8,12 +8,12 @@ on:
 
 permissions:
   contents: read
-  packages: write   # Required for pushing to GHCR
+  packages: write
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  CONTAINER_NAME: winnies
+  CONTAINER_NAME: winnies-site
 
 jobs:
   build-and-deploy:
@@ -22,6 +22,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
@@ -43,37 +46,38 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          # Fixed cache configuration
           cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-to: type=gha,mode=max,ignore-error=true
 
       # ======================
-      # Deploy to remote server
+      # Deploy to your server
       # ======================
-      - name: Deploy to Server via SSH
+      - name: Deploy to Server (51.124.123.164)
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          port: 22
           script: |
             set -e
 
-            echo "Logging into GitHub Container Registry..."
+            echo "🔐 Logging into GitHub Container Registry..."
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-            echo "Pulling latest image..."
+            echo "📥 Pulling latest image..."
             docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
-            echo "Stopping old container (if running)..."
-            docker stop ${{ env.CONTAINER_NAME }} || true
-            docker rm ${{ env.CONTAINER_NAME }} || true
+            echo "⏹️  Stopping old container..."
+            docker stop ${{ env.CONTAINER_NAME }} 2>/dev/null || true
+            docker rm ${{ env.CONTAINER_NAME }} 2>/dev/null || true
 
-            echo "Starting new container..."
+            echo "🚀 Starting new container..."
             docker run -d \
               --name ${{ env.CONTAINER_NAME }} \
               --restart unless-stopped \
-              -p 8000:80 \
+              -p 80:80 \
               ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
-            echo "✅ Deployment completed successfully!"
+            echo "✅ Deployment successful!"
+            docker ps | grep ${{ env.CONTAINER_NAME }}
