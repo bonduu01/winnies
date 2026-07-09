@@ -74,7 +74,7 @@ jobs:
             docker run -d \
               --name ${{ env.CONTAINER_NAME }} \
               --restart unless-stopped \
-              -p 80:80 \
+              -p 8000:80 \
               ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
             echo "✅ Deployment successful!"
