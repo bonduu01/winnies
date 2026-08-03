@@ -24,7 +24,7 @@ async function run() {
   }
 
   // 2. Required sections
-  const sectionIds = ['hero', 'gallery', 'about', 'services', 'contact'];
+  const sectionIds = ['home', 'gallery', 'about', 'services', 'contact'];
   for (const id of sectionIds) {
     const el = await page.$(`#${id}`);
     record(`Section #${id} exists`, !!el);
@@ -39,14 +39,14 @@ async function run() {
     record('Header is sticky/fixed', false, 'header not found');
   }
 
-  // 4. Hero video or poster fallback
-  const heroVideo = await page.$('.hero-video');
-  if (heroVideo) {
-    const src = await page.evaluate(el => el.getAttribute('src') || el.querySelector('source')?.getAttribute('src'), heroVideo);
-    const poster = await page.evaluate(el => el.getAttribute('poster'), heroVideo);
-    record('Hero video element exists', true, `src: ${src || 'none'}, poster: ${poster || 'none'}`);
+  // 4. Hero media (video or image fallback)
+  const heroMedia = await page.$('.hero-video, .hero-image');
+  if (heroMedia) {
+    const src = await page.evaluate(el => el.getAttribute('src') || el.querySelector('source')?.getAttribute('src'), heroMedia);
+    const poster = await page.evaluate(el => el.getAttribute('poster'), heroMedia);
+    record('Hero media element exists', true, `src: ${src || 'none'}, poster: ${poster || 'none'}`);
   } else {
-    record('Hero video element exists', false);
+    record('Hero media element exists', false);
   }
 
   // 5. Gallery filter buttons show/hide images
