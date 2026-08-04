@@ -1,0 +1,10 @@
+{
+  "name": "winnies-hair-braiding",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static marketing site for Winnie's Hair Braiding. No build step.",
+  "scripts": {
+    "dev": "python3 -m http.server 8000",
+    "test": "cd tests && node verify.js"
+  }
+}

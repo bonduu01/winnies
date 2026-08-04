@@ -23,7 +23,7 @@
   --transition: all 0.3s ease;
 
   --container-max: 1200px;
-  --section-padding: 4rem 1.5rem;
+  --section-padding: 4rem 0;
 }
 
 /* === Dark Mode Variables === */
@@ -616,33 +616,17 @@ p {
 }
 
 @media (max-width: 768px) {
-  .hero {
-    justify-content: center;
-  }
-
-  .hero-content {
-    justify-content: center;
-  }
-
   .hero-card {
     max-width: 100%;
     padding: 2.25rem;
-    text-align: center;
   }
 
   .hero-title::after {
-    left: 50%;
-    transform: translateX(-50%);
     transition-delay: 0.5s;
   }
 
   .hero--animated .hero-title::after {
     width: 100px;
-  }
-
-  .hero-actions,
-  .hero-chips {
-    justify-content: center;
   }
 }
 
@@ -663,7 +647,7 @@ p {
 
 /* === Gallery === */
 .gallery {
-  padding: 2.5rem 1.5rem 4rem;
+  padding: 2.5rem 0 4rem;
   background-color: var(--color-bg-light);
 }
 
@@ -1048,7 +1032,7 @@ p {
 .site-footer {
   background-color: #111111;
   color: #ffffff;
-  padding: 3.6rem 1.5rem 1.35rem;
+  padding: 3.6rem 0 1.35rem;
 }
 
 .footer-inner {
