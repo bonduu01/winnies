@@ -24,7 +24,7 @@ async function run() {
   }
 
   // 2. Required sections
-  const sectionIds = ['home', 'gallery', 'about', 'services', 'contact'];
+  const sectionIds = ['home', 'gallery', 'about', 'services', 'pricing', 'contact'];
   for (const id of sectionIds) {
     const el = await page.$(`#${id}`);
     record(`Section #${id} exists`, !!el);
@@ -49,7 +49,7 @@ async function run() {
     record('Hero media element exists', false);
   }
 
-  // 5. Gallery filter buttons show/hide images
+  // 5. Gallery filter buttons show/hide images + aria-pressed sync
   const filterButtons = await page.$$('.filter-btn');
   if (filterButtons.length > 0) {
     // Click the first filter button
@@ -57,11 +57,23 @@ async function run() {
     await sleep(300);
     const visibleImages = await page.$$eval('.gallery-card:not(.hidden) img', imgs => imgs.length);
     record('Gallery filter buttons toggle images', visibleImages > 0, `visible images after first filter: ${visibleImages}`);
+
+    if (filterButtons.length > 1) {
+      await filterButtons[1].click();
+      await sleep(200);
+      const pressed = await page.evaluate(el => el.getAttribute('aria-pressed'), filterButtons[1]);
+      const firstPressed = await page.evaluate(el => el.getAttribute('aria-pressed'), filterButtons[0]);
+      record(
+        'Filter button aria-pressed syncs',
+        pressed === 'true' && firstPressed === 'false',
+        `clicked: ${pressed}, previous: ${firstPressed}`
+      );
+    }
   } else {
     record('Gallery filter buttons toggle images', false, 'no filter buttons found');
   }
 
-  // 6. Mobile menu toggle
+  // 6. Mobile menu toggle (+ hidden attribute sync)
   await page.setViewport({ width: 375, height: 667 });
   await sleep(200);
   const menuToggle = await page.$('.menu-toggle');
@@ -71,8 +83,16 @@ async function run() {
       await menuToggle.click();
       await sleep(300);
       const nav = await page.$('.mobile-nav');
-      const isOpen = nav ? await page.evaluate(el => el.classList.contains('open') && getComputedStyle(el).display !== 'none', nav) : false;
+      const isOpen = nav
+        ? await page.evaluate(
+            el => el.classList.contains('open') && getComputedStyle(el).display !== 'none' && !el.hasAttribute('hidden'),
+            nav
+          )
+        : false;
       record('Mobile menu toggles', isOpen);
+      // Close it again so later tests start clean
+      await menuToggle.click();
+      await sleep(200);
     } else {
       record('Mobile menu toggles', false, 'menu toggle hidden at mobile viewport');
     }
@@ -80,7 +100,37 @@ async function run() {
     record('Mobile menu toggles', false, 'no menu toggle found');
   }
 
-  // 7. CTA links
+  // 7. Pricing lightbox (open, zoom, close)
+  await page.setViewport({ width: 1280, height: 800 });
+  await sleep(200);
+  const zoomTrigger = await page.$('.pricing-zoom-trigger');
+  const lightbox = await page.$('#pricing-lightbox');
+  if (zoomTrigger && lightbox) {
+    await zoomTrigger.click();
+    await sleep(300);
+    const isOpen = await page.evaluate(el => el.open, lightbox);
+    record('Pricing lightbox opens', isOpen);
+
+    const lightboxImage = await page.$('#lightbox-image');
+    if (lightboxImage && isOpen) {
+      await lightboxImage.click();
+      await sleep(200);
+      const isZoomed = await page.evaluate(el => el.classList.contains('is-zoomed'), lightbox);
+      record('Pricing lightbox zoom toggles', isZoomed);
+    }
+
+    const lightboxClose = await page.$('#lightbox-close');
+    if (lightboxClose && isOpen) {
+      await lightboxClose.click();
+      await sleep(200);
+      const stillOpen = await page.evaluate(el => el.open, lightbox);
+      record('Pricing lightbox closes', !stillOpen);
+    }
+  } else {
+    record('Pricing lightbox opens', false, 'trigger or dialog not found');
+  }
+
+  // 8. CTA links
   const ctaHrefs = await page.$$eval('a[href]', links => links.map(l => l.href));
   const hasWhatsApp = ctaHrefs.some(h => h.includes('wa.me'));
   const hasPhone = ctaHrefs.some(h => h.startsWith('tel:'));
@@ -89,12 +139,12 @@ async function run() {
   record('Phone CTA present', hasPhone);
   record('Email CTA present', hasEmail);
 
-  // 8. Both addresses
+  // 9. Both addresses
   const pageText = await page.evaluate(() => document.body.innerText);
   record('NY address present', pageText.includes('NY') || pageText.includes('New York'));
   record('MN address present', pageText.includes('MN') || pageText.includes('Minnesota'));
 
-  // 9. Responsive viewports
+  // 10. Responsive viewports
   const viewports = [320, 768, 1440];
   for (const width of viewports) {
     await page.setViewport({ width, height: 800 });

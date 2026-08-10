@@ -1,6 +1,7 @@
 /**
  * Winnie's Hair Braiding — Main JavaScript
- * Handles mobile menu, gallery filtering, header shadow, and scroll animations.
+ * Handles theme toggle, mobile menu, gallery filtering, scroll animations,
+ * hero parallax, the pricing lightbox, and the scroll FAB.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -29,19 +30,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileNav = document.querySelector('.mobile-nav');
 
   if (menuToggle && mobileNav) {
-    menuToggle.addEventListener('click', () => {
-      const isOpen = mobileNav.classList.toggle('open');
+    const setMenuOpen = isOpen => {
+      mobileNav.classList.toggle('open', isOpen);
+      // Keep the hidden attribute in sync so an open nav is not semantically hidden
+      if (isOpen) {
+        mobileNav.removeAttribute('hidden');
+      } else {
+        mobileNav.setAttribute('hidden', '');
+      }
       menuToggle.setAttribute('aria-expanded', String(isOpen));
       menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    };
+
+    menuToggle.addEventListener('click', () => {
+      setMenuOpen(!mobileNav.classList.contains('open'));
     });
 
     // Close mobile menu when a link is clicked
     mobileNav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileNav.classList.remove('open');
-        menuToggle.setAttribute('aria-expanded', 'false');
-        menuToggle.setAttribute('aria-label', 'Open menu');
-      });
+      link.addEventListener('click', () => setMenuOpen(false));
     });
   }
 
@@ -69,9 +76,19 @@ document.addEventListener('DOMContentLoaded', () => {
     button.addEventListener('click', () => {
       const filter = button.dataset.filter;
 
-      // Update active button
-      filterButtons.forEach(btn => btn.classList.remove('active'));
+      // Update active button (visual class + pressed state)
+      filterButtons.forEach(btn => {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-pressed', 'false');
+      });
       button.classList.add('active');
+      button.setAttribute('aria-pressed', 'true');
+
+      // A direct filter click clears any hero chip selection
+      document.querySelectorAll('.hero-chip').forEach(chip => {
+        chip.classList.remove('active');
+        chip.setAttribute('aria-pressed', 'false');
+      });
 
       // Filter cards
       galleryCards.forEach(card => {
@@ -87,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // === Scroll Animations (Fade In) ===
   const animatedElements = document.querySelectorAll(
-    '.section-header, .gallery-card, .service-card, .about-text, .about-images, .contact-card, .location-card, .policy-figure'
+    '.section-header, .gallery-card, .service-card, .about-text, .about-images, .contact-card, .location-card, .policy-figure, .pricing-figure'
   );
 
   const revealElements = () => {
@@ -148,8 +165,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const filter = chip.dataset.filter;
         const galleryButton = document.querySelector(`.filter-btn[data-filter="${filter}"]`);
 
-        heroChips.forEach(c => c.classList.remove('active'));
+        heroChips.forEach(c => {
+          c.classList.remove('active');
+          c.setAttribute('aria-pressed', 'false');
+        });
         chip.classList.add('active');
+        chip.setAttribute('aria-pressed', 'true');
 
         if (galleryButton) {
           galleryButton.click();
@@ -157,6 +178,90 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     });
+
+    // Subtle scroll parallax on the hero scene (transform-only, GPU-friendly).
+    // Disabled for reduced-motion users and paused when the hero is off-screen.
+    const heroScene = hero.querySelector('.hero-scene');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    if (heroScene && !reduceMotion.matches) {
+      let heroVisible = true;
+      let ticking = false;
+
+      if ('IntersectionObserver' in window) {
+        const heroObserver = new IntersectionObserver(entries => {
+          heroVisible = entries[0].isIntersecting;
+        });
+        heroObserver.observe(hero);
+      }
+
+      const updateParallax = () => {
+        ticking = false;
+        if (heroVisible) {
+          heroScene.style.transform = `translate3d(0, ${window.scrollY * 0.2}px, 0)`;
+        }
+      };
+
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(updateParallax);
+        }
+      }, { passive: true });
+    }
+  }
+
+  // === Pricing Lightbox ===
+  const pricingTrigger = document.querySelector('.pricing-zoom-trigger');
+  const lightbox = document.getElementById('pricing-lightbox');
+  const lightboxClose = document.getElementById('lightbox-close');
+  const lightboxImage = document.getElementById('lightbox-image');
+
+  if (pricingTrigger && lightbox && typeof lightbox.showModal === 'function') {
+    const lightboxStage = lightbox.querySelector('.lightbox-stage');
+
+    pricingTrigger.addEventListener('click', () => {
+      lightbox.showModal();
+      if (lightboxClose) {
+        lightboxClose.focus();
+      }
+    });
+
+    if (lightboxClose) {
+      lightboxClose.addEventListener('click', () => lightbox.close());
+    }
+
+    // Click on the backdrop (the dialog element itself) closes the viewer
+    lightbox.addEventListener('click', event => {
+      if (event.target === lightbox) {
+        lightbox.close();
+      }
+    });
+
+    // Reset zoom and return focus whenever the dialog closes (button, Esc, backdrop)
+    lightbox.addEventListener('close', () => {
+      lightbox.classList.remove('is-zoomed');
+      pricingTrigger.focus();
+    });
+
+    // Click the image to zoom in/out; zooming centers on the click point
+    if (lightboxImage && lightboxStage) {
+      lightboxImage.addEventListener('click', event => {
+        const zooming = !lightbox.classList.contains('is-zoomed');
+        lightbox.classList.toggle('is-zoomed', zooming);
+
+        if (zooming) {
+          const rect = lightboxImage.getBoundingClientRect();
+          const ratioX = (event.clientX - rect.left) / rect.width;
+          const ratioY = (event.clientY - rect.top) / rect.height;
+
+          requestAnimationFrame(() => {
+            lightboxStage.scrollLeft = ratioX * lightboxStage.scrollWidth - lightboxStage.clientWidth / 2;
+            lightboxStage.scrollTop = ratioY * lightboxStage.scrollHeight - lightboxStage.clientHeight / 2;
+          });
+        }
+      });
+    }
   }
 
   // === Scroll Floating Action Button ===
