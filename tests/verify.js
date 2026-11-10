@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 
-const URL = 'http://localhost:8000';
+const URL = 'http://127.0.0.1:8000';
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -24,7 +24,7 @@ async function run() {
   }
 
   // 2. Required sections
-  const sectionIds = ['hero', 'gallery', 'about', 'services', 'contact'];
+  const sectionIds = ['home', 'gallery', 'about', 'services', 'shop', 'contact'];
   for (const id of sectionIds) {
     const el = await page.$(`#${id}`);
     record(`Section #${id} exists`, !!el);
@@ -39,14 +39,13 @@ async function run() {
     record('Header is sticky/fixed', false, 'header not found');
   }
 
-  // 4. Hero video or poster fallback
-  const heroVideo = await page.$('.hero-video');
-  if (heroVideo) {
-    const src = await page.evaluate(el => el.getAttribute('src') || el.querySelector('source')?.getAttribute('src'), heroVideo);
-    const poster = await page.evaluate(el => el.getAttribute('poster'), heroVideo);
-    record('Hero video element exists', true, `src: ${src || 'none'}, poster: ${poster || 'none'}`);
+  // 4. Hero media element exists
+  const heroMedia = await page.$('.hero-image') || await page.$('.hero-video');
+  if (heroMedia) {
+    const src = await page.evaluate(el => el.getAttribute('src') || el.querySelector('source')?.getAttribute('src'), heroMedia);
+    record('Hero media element exists', true, `src: ${src || 'none'}`);
   } else {
-    record('Hero video element exists', false);
+    record('Hero media element exists', false);
   }
 
   // 5. Gallery filter buttons show/hide images
