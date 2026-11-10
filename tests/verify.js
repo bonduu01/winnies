@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 
-const URL = 'http://localhost:8000';
+const URL = 'http://127.0.0.1:8000';
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -24,7 +24,7 @@ async function run() {
   }
 
   // 2. Required sections
-  const sectionIds = ['home', 'gallery', 'about', 'services', 'contact'];
+  const sectionIds = ['home', 'gallery', 'about', 'services', 'shop', 'policy', 'contact'];
   for (const id of sectionIds) {
     const el = await page.$(`#${id}`);
     record(`Section #${id} exists`, !!el);
