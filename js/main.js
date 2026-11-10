@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // === Scroll Animations (Fade In) ===
   const animatedElements = document.querySelectorAll(
-    '.section-header, .gallery-card, .service-card, .about-text, .about-images, .contact-card, .location-card'
+    '.section-header, .gallery-card, .service-card, .about-text, .about-images, .contact-card, .location-card, .policy-figure'
   );
 
   const revealElements = () => {

@@ -24,7 +24,7 @@ async function run() {
   }
 
   // 2. Required sections
-  const sectionIds = ['home', 'gallery', 'about', 'services', 'shop', 'contact'];
+  const sectionIds = ['home', 'gallery', 'about', 'services', 'shop', 'policy', 'contact'];
   for (const id of sectionIds) {
     const el = await page.$(`#${id}`);
     record(`Section #${id} exists`, !!el);
@@ -39,11 +39,12 @@ async function run() {
     record('Header is sticky/fixed', false, 'header not found');
   }
 
-  // 4. Hero media element exists
-  const heroMedia = await page.$('.hero-image') || await page.$('.hero-video');
+  // 4. Hero media (video or image fallback)
+  const heroMedia = await page.$('.hero-video, .hero-image');
   if (heroMedia) {
     const src = await page.evaluate(el => el.getAttribute('src') || el.querySelector('source')?.getAttribute('src'), heroMedia);
-    record('Hero media element exists', true, `src: ${src || 'none'}`);
+    const poster = await page.evaluate(el => el.getAttribute('poster'), heroMedia);
+    record('Hero media element exists', true, `src: ${src || 'none'}, poster: ${poster || 'none'}`);
   } else {
     record('Hero media element exists', false);
   }

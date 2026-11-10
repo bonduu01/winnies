@@ -949,6 +949,74 @@ p {
   }
 }
 
+/* === Policy === */
+.policy {
+  padding: var(--section-padding);
+  background-color: var(--color-bg);
+}
+
+.policy-figure {
+  max-width: 720px;
+  margin: 0 auto;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.policy-figure img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1284 / 1655;
+  object-fit: contain;
+}
+
+.policy-figure figcaption {
+  padding: 0.875rem 1rem;
+  background-color: var(--color-white);
+  color: var(--color-text-light);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.policy-transcript {
+  max-width: 720px;
+  margin: 1.5rem auto 0;
+  background-color: var(--color-white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem 1.5rem;
+}
+
+.policy-transcript summary {
+  cursor: pointer;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--color-dark);
+}
+
+.policy-transcript-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 1.25rem;
+}
+
+.policy-transcript-grid ol {
+  padding-left: 1.25rem;
+}
+
+.policy-transcript-grid li {
+  margin-bottom: 0.5rem;
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  .policy-transcript-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* === Contact === */
 .contact {
   padding: var(--section-padding);
